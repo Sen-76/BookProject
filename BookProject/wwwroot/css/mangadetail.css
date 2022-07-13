@@ -1,0 +1,275 @@
+.manga_info {
+    width: 85%;
+    height: 300px;
+    display: flex;
+    position: initial;
+    margin: 5px 100px;
+}
+
+    .manga_info li {
+        display: flex;
+        color: white;
+        margin: 10px 0;
+        font-size: 15px;
+    }
+
+ul.report {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.description {
+    color: white;
+    margin: 5px 100px;
+    min-height: 100px;
+    border-top: 1px solid white;
+    /* background: linear-gradient(180deg,rgba(51,57,64,0),#33394060 62%,#3339408e); */
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+    h3.listchap {
+        margin: 5px 100px;
+        color: white;
+    }
+
+.report li {
+    margin: 0 30px 0 0;
+    font-size: 20px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.report ion-icon {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.like.active {
+    color: rgb(51, 95, 124);
+}
+
+.heart.active {
+    color: rgb(51, 95, 124);
+}
+
+.manga_info h4 {
+    margin-right: 10px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: cadetblue;
+    }
+
+.readmanga {
+    padding: 7px;
+    background: cadetblue;
+    margin: 5px;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: 550;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chaplist {
+    color: white;
+    border: none;
+    margin: 5px 100px;
+    border-top: 1px solid white;
+    height: 400px;
+    overflow-y: scroll;
+    padding: 0 30px;
+}
+
+    .chaplist li {
+        margin-top: 15px;
+    }
+
+.subchaplist input {
+    background: none;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+}
+
+    .subchaplist input:hover {
+        color: lawngreen;
+    }
+
+.subchaplist {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.comments {
+    border-top: 1px solid white;
+    margin: 5px 100px;
+    color: white;
+}
+
+.CommentForm {
+    display: flex;
+    margin-top: 20px;
+    width: 100%;
+}
+
+li.doc {
+    width: 100%;
+    margin-left: 10px;
+}
+
+.subCommentForm {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.cmtform {
+    background-color: rgba(110, 110, 110, 0.664);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+    .cmtform li {
+        margin: 10px;
+    }
+
+ul.CommentDate {
+    margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+    ul.CommentDate li {
+        margin: 0 10px;
+    }
+
+.time {
+    color: rgb(201, 201, 201);
+    font-size: 15px;
+}
+
+.imgCmt {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+    .imgCmt img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        object-fit: cover;
+    }
+
+form.AddComment {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+    form.AddComment .PostComment {
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin: 5px;
+        background-color: cadetblue;
+        color: white;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+form.addchap {
+    height: 0;
+    margin: 10px 0 0 0;
+    overflow: hidden;
+    transition: height 0.5s ease-in-out;
+}
+
+.addchap.active {
+    height: 40px;
+}
+
+form.AddComment .TextComment {
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: rgb(201, 201, 201);
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.pagediv a.active {
+    color: cyan;
+    background: rgb(48, 216, 112, 0.8);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+input.page.active {
+    color: cyan;
+    background: rgb(48, 216, 112, 0.8);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+input.page:hover {
+    color: cyan;
+    background: rgb(48, 216, 112, 0.8);
+    border-radius: 5px;
+}
+
+.pagediv {
+    padding: 7px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+input.page {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+input.readmanga:hover {
+    background: repeating-linear-gradient(45deg, black, transparent 100px);
+    color: teal;
+}

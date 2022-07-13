@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login | Sen</title>
+    <link rel="icon" href="~/image/Enmusubi-full-body.png" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="~/css/fnon.min.css">
+</head>
+<body>
+    <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
+    @await Html.PartialAsync("Header")
+    @await Html.PartialAsync("SideBar")
+    <div class="main ${leftActive}">
+        <div class="link">
+            <a href="/Home/Index"> Trang chủ</a>
+            /
+            <a href="/Home/Login"> Đăng nhập </a>
+        </div>
+        <span class="mess">@(ViewBag.Alert)</span>
+        <form action="/Home/DoLogin" method="POST" class="formBox login_form @ViewBag.Active">
+            <h1>Đăng nhập</h1>
+            <div class="inputBox">
+                <input type="text" name="Account" value="@ViewBag.Account" required>
+                <span>Tài khoản</span>
+            </div>
+            <div class="inputBox">
+                <input type="password" name="Password" value="@ViewBag.Password" required>
+                <span>Mật khẩu</span>
+            </div>
+            <span><input type="checkbox" name="remember" value="1" /> Nhớ Đăng Nhập?</span>
+            <input type="submit" value="Đăng nhập" class="login_btn" name="login" />
+            Bạn chưa có tài khoản?
+            <div class="regis aa">Đăng kí</div>
+        </form>
+        <form action="/Home/Register" method="POST" class="formBox regis_form @ViewBag.Active">
+            <h1>Đăng kí</h1>
+            <div class="inputBox">
+                <input type="text" name="Account" value="@ViewBag.Accounts" required>
+                <span>Tài khoản</span>
+            </div>
+            <div class="inputBox">
+                <input type="password" name="Password" value="@ViewBag.Passwords" required>
+                <span>Mật khẩu</span>
+            </div>
+            <div class="inputBox">
+                <input type="password" name="RePassword" value="@ViewBag.RePassword" required>
+                <span>Nhập lại mật khẩu</span>
+            </div>
+            <div class="inputBox">
+                <input type="email" name="Email" value="@ViewBag.Email" required>
+                <span>Email</span>
+            </div>
+            <input type="submit" value="Đăng kí" class="login_btn" name="regis" />
+            Bạn đã có tài khoản?
+            <div class="loginn aa">Trở về đăng nhập</div>
+        </form>
+    </div>
+    @await Html.PartialAsync("OtherNav")
+    <script src="~/js/fnon.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Fnon.Hint.Init({
+                zIndex: 9900,
+            });
+            // Hint
+            var message = "@(ViewBag.Message)";
+            var theme = "@(ViewBag.Theme)";
+            var title = "@(ViewBag.Title)";
+            var position = "right-top";
+            var animation = "slide-left";
+            Fnon.Hint[theme](message, {
+                title,
+                position,
+                animation,
+            })
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="~/js/index.js"></script>
+    <script src="~/js/login.js"></script>
+</body>
+</html>

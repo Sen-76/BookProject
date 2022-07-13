@@ -1,0 +1,327 @@
+﻿@using BookProject.Models
+@model List<BookCategory>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="web_title">Manga Detail | Sen</title>
+    <link rel="icon" href="~/image/Enmusubi-full-body.png" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="~/css/mangadetail.css">
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/fnon.min.css">
+</head>
+
+<body>
+    <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
+    @await Html.PartialAsync("Header")
+    @await Html.PartialAsync("SideBar")
+    <div class="main">
+        <div class="link" id="link">
+            <a href="/Home/Index"> Trang chủ</a>
+            <p> /</p>
+            <a href="/Books/Books"> Truyện tranh </a>
+            <p> /</p>
+            <a href="/Books/ProviderBook"> @ViewBag.BookName </a>
+        </div>
+        <div class="manga_info">
+            <img src="/image/Enmusubi-full-body.png">
+            <div class="mangaDetail">
+                <ul>
+                    <li>
+                        <h2>
+                            @ViewBag.BookName
+                        </h2>
+                    </li>
+                    <li>
+                        <h4>Tên khác:</h4>
+                        <span>@ViewBag.OtherName</span>
+                    </li>
+                    <li>
+                        <h4>Tác giả:</h4>
+                        <a href="Search?go=SearchAuthor&AuthorName=${Manga.authorName}">@ViewBag.Author</a>
+                    </li>
+                    <li>
+                        <h4>Thể loại:</h4>
+                        @foreach (BookCategory o in Model)
+                        {
+                            <a href="#" style="margin-right: 5px">@o.Category.CategoryName</a>
+                        }
+                    </li>
+                    <li>
+                        <h4>Trạng thái:</h4>
+                        @if (@ViewBag.Status == 1)
+                        {
+                            <a href="Search?go=SearchStatus&Status=${Manga.status}">Đang cập nhật</a>
+                        }@if (@ViewBag.Status == 2)
+                        {
+                            <a href="Search?go=SearchStatus&Status=${Manga.status}">Đã hoàn thành</a>
+                        }@if (@ViewBag.Status == 3)
+                        {
+                            <a href="Search?go=SearchStatus&Status=${Manga.status}">Tạm ngừng cập nhật</a>
+                        }@if (@ViewBag.Status == 4)
+                        {
+                            <a href="Search?go=SearchStatus&Status=${Manga.status}">Đã dừng cập nhật</a>
+                        }
+                    </li>
+                    <li>
+                        <h4>Thời gian update:</h4>
+                        @ViewBag.TimeProvide?.ToString("dd-MMM-yyyy")
+                    </li>
+                    <li>
+                        <ul class="report">
+                            <li>
+                                <ul>
+                                    <li>
+                                        <ion-icon class="like" name="thumbs-up"></ion-icon>
+                                    </li>
+                                    <li>0</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li>
+                                        <ion-icon class="heart" name="heart"></ion-icon>
+                                    </li>
+                                    <li>0</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li>
+                                        <ion-icon class="star" name="star"></ion-icon>
+                                    </li>
+                                    <li>0</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li>
+                                        <ion-icon name="eye"></ion-icon>
+                                    </li>
+                                    <li>0</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <form action="ReadManga" method="POST">
+                            <input type="hidden" name="ChapterNumber" value="1" />
+                            <input type="hidden" name="ChapterName" value="Chapter 1" />
+                            <input type="hidden" name="MangaName" value="${Manga.mangaName}" />
+                            <input type="hidden" name="MangaId" value="${MangaId}" />
+                            <input type="submit" class="readmanga" value="Đọc truyện" />
+                        </form>
+                        <form action="ReadLastChapter" method="POST">
+                            <input type="hidden" name="MangaId" value="${detail.mangaId}" />
+                            <input type="hidden" name="MangaName" value="${detail.mangaName}" />
+                            <input type="submit" class="readmanga" value="Tập mới nhất" />
+                        </form>
+                        @if (@ViewBag.Provider == @ViewBag.UserId)
+                        {
+                            <form action="/Books/UpdateBook?BookId=@ViewBag.BookId" method="POST">
+                                <input type="submit" class="readmanga" value="Update Information" />
+                            </form>
+                        }
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="description">
+            <h3><ion-icon name="information-circle-outline"></ion-icon> Tóm tắt</h3>
+            <span style="padding: 0 30px">@ViewBag.Description</span>
+        </div>
+        <h3 class="listchap">
+            <div class="spbw">
+                <div>
+                    <ion-icon name="list-box"></ion-icon> List Chapter
+                    ( @ViewBag.Chap.Count )
+                </div>
+                @if (@ViewBag.Provider == @ViewBag.UserId)
+                {
+                    <input type="submit" class="readmanga" value="Add Chapter" onclick="AddChap()" />
+                }
+            </div>
+        </h3>
+        <div class="chaplist">
+            <form class="addchap" action="/Books/AddChapter" method="POST">
+                <input type="hidden" name="BookId" value="@ViewBag.BookId" />
+                <input value="@ViewBag.Text" type="text" class="input" style="width: 90%" placeholder="Enter Chapter's Name" name="ChapterName" />
+                <input type="submit" class="readmanga" value="Add" />
+            </form>
+            <ul>
+                @foreach (Chapter o in ViewBag.Chap)
+                {
+                    <a href="#">
+                    <li>
+                        <ul class="subchaplist">    
+                            <li style="display: flex; flex-direction: row; align-items: center">
+                                @if (@ViewBag.Provider == @ViewBag.UserId)
+                                {
+                                <form action="/Books/DeleteChapter" method="POST">
+                                    <input type="hidden" name="ChapterId" value="@o.ChapterId" />
+                                    <input type="hidden" name="BookId" value="@ViewBag.BookId" />
+                                    <input type="submit" class="readmanga" value="Delete" />
+                                </form>
+                                }
+                        
+                                    @o.ChapterName
+                            </li>
+                            <li class="time">@o.TimeUpdate</li>
+                        </ul>
+                    </li></a>
+                }
+            </ul>
+        </div>
+        <div class="comments">
+            <h3>Bình luận</h3>
+            @if (ViewBag.UserId != 0 && ViewBag.UserId != null)
+            {
+                <form class="AddComment" action="/Books/AddComment" method="POST">
+                    <input class="TextComment" type="text" name="CommentContent" placeholder="Viết bình luận vào đây"></input>
+                    <input type="hidden" name="BookId" value="@ViewBag.BookId"></input>
+                    <input class="PostComment" type="submit" value="Post Comment" name="PostComment" />
+                </form>
+            }
+            @if (ViewBag.UserId == 0 || ViewBag.UserId == null)
+            {
+                <span>Bạn cần phải <a style="color: #9494fc" href="/Home/Login"> đăng nhập</a> để comment</span>
+            }
+            <div id="CommentForm">
+                @foreach (Comment o in ViewBag.Comment)
+                {
+                    <ul class="CommentForm">
+                        <li class="imgCmt">
+                            <img src="/image/shenhe__genshin_impact__by_cutesexyrobutts_dew4k8l.jpg">
+                        </li>
+                        <li class="doc">
+                            <ul>
+                                <li>
+                                    <ul class="cmtform">
+                                        <li>
+                                            <div class="CommentAcc">
+                                                <a href="#">@o.User.UserName</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <form style="display: none;" class="AddComment" action="/Books/EditComment" method="POST">
+                                                <input class="TextComment" type="text" name="CommentContent" value="@o.CmtContent"></input>
+                                                <input type="hidden" name="BookId" value="@ViewBag.BookId"></input>
+                                                <input class="PostComment" type="submit" value="Edit Comment" name="PostComment" />
+                                            </form>
+                                            <div class="CommnentContent">
+                                                @o.CmtContent
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <ul class="CommentDate">
+                                        <li>
+                                            <a href="#">
+                                                <ion-icon class="like" name="thumbs-up"></ion-icon> 0
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <ion-icon name="chatbubbles"></ion-icon> Trả lời
+                                            </a>
+                                        </li>
+                                        @if (ViewBag.UserId == o.UserId)
+                                        {
+                                            <li>
+                                                <a href="#">
+                                                    <ion-icon name="create"></ion-icon> Sửa
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/Books/DeleteComment?BookId=@ViewBag.BookId&&CmtId=@o.CommentId">
+                                                    <ion-icon name="close-circle-outline"></ion-icon> Xóa
+                                                </a>
+                                            </li>
+                                        }
+                                        <li class="time">@o.TimePost.ToString("dd-MMM-yyyy")</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            </div>
+            <div class="pagediv">
+                @for (int i = 1; i <= ViewBag.MaxPage; i++)
+                {
+                    <a style="padding: 8px;" class="page @(ViewBag.Page == i?" active":"")" href="/Books/Books?Page=@i">@i</a>
+                }
+            </div>
+            <!--                <div class="subCommentForm">
+                                <div class="imgCmt">
+                                    <img src="image/shenhe__genshin_impact__by_cutesexyrobutts_dew4k8l.jpg">
+                                </div>
+                                <ul class="cmtformto">
+                                    <li>
+                                        <ul class="cmtform">
+                                            <li>
+                                                <div class="CommentAcc">
+                                                    Tên Account
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="CommnentContent">
+                                                    Comment Content
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="CommentDate">
+                                            <li>
+                                                <a href="#">
+                                                    <ion-icon class="like" name="thumbs-up"></ion-icon> 0
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <ion-icon name="chatbubbles"></ion-icon> Trả lời
+                                                </a>
+                                            </li>
+                                            <li class="time">Thời gian</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>-->
+        </div>
+    </div>
+    @await Html.PartialAsync("OtherNav")
+    <script>
+        function AddChap() {
+            const Add = document.querySelector(".addchap");
+            Add.classList.toggle("active");
+        }
+    </script>
+    <script src="~/js/fnon.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Fnon.Hint.Init({
+                zIndex: 9900,
+            });
+            var message = "@(ViewBag.Message)";
+            var theme = "@(ViewBag.Theme)";
+            var title = "@(ViewBag.Title)";
+            var position = "right-top";
+            var animation = "slide-left";
+            Fnon.Hint[theme](message, {
+                title,
+                position,
+                animation,
+            })
+        });
+    </script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="~/js/index.js"></script>
+    <script src="~/js/mangadetail.js"></script>
+</body>
+
+</html>

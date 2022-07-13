@@ -1,0 +1,96 @@
+﻿@using BookProject.Models
+@model List<Category>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="web_title">Add truyện | Sen</title>
+    <link rel="icon" href="~/image/Enmusubi-full-body.png" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/manga.css">
+    <link rel="stylesheet" href="~/css/mangadetail.css">
+    <link rel="stylesheet" href="~/css/fnon.min.css">
+</head>
+
+<body>
+    <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
+    @await Html.PartialAsync("Header")
+    @await Html.PartialAsync("SideBar")
+    <div class="main ${leftActive}">
+        <div class="link" id="link">
+            <a href="/Home/Index"> Trang chủ</a>
+            <p> /</p>
+            <a href="/Books/Books"> Truyện tranh </a>
+            <p> /</p>
+            <a href="/Books/AddBook"> Thêm truyện </a>
+        </div>
+        <div class="new_update">
+            <form action="/Books/DoAddBook" method="POST">
+                <div class="formtop">
+                    <div style="width: 30%;" class="formleft">
+                        <span>Bìa truyện</span><br />
+                        <img style="align-items: center" src="/image/Enmusubi-full-body.png" alt="Bìa sách" width="200" height="200" />
+                        <input class="input" type="text" name="BookCover" value="@ViewBag.BookCover" />
+                    </div>
+                    <ul style="width: 69%;">
+                        <li>
+                            <span>Tên truyện</span><br />
+                            <input class="input" type="text" name="BookName" value="@ViewBag.BookName" />
+                        </li>
+                        <li>
+                            <span>Tên khác</span><br />
+                            <input class="input" type="text" name="OtherName" value="@ViewBag.OtherName" />
+                        </li>
+                        <li>
+                            <span>Tác giả</span><br />
+                            <input class="input" type="text" name="Author" value="@ViewBag.Author" />
+                        </li>
+                        <li>
+                            <span>Mô tả, Tóm tắt</span><br />
+                            <input class="input" type="text" name="Description" value="@ViewBag.Description" />
+                        </li>
+                    </ul>
+                </div>
+                @foreach (Category o in Model)
+                {
+                    <input type="checkbox" name="Categories" value="@o.CategoryId"
+                       @foreach(string i in ViewBag.Onecate){
+                       if(o.CategoryId == Convert.ToInt32(i)){
+                       @ViewBag.Checked
+                       }
+                       } />
+                    <span> @o.CategoryName</span>
+                }
+                <input class="readmanga" type="submit" name="Description" value="Submit" />
+            </form>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("OtherNav")
+    <script src="~/js/fnon.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Fnon.Hint.Init({
+                zIndex: 9900,
+            });
+            // Hint
+            var message = "@(ViewBag.Message)";
+            var theme = "@(ViewBag.Theme)";
+            var title = "@(ViewBag.Title)";
+            var position = "right-top";
+            var animation = "slide-left";
+            Fnon.Hint[theme](message, {
+                title,
+                position,
+                animation,
+            })
+        });
+    </script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="~/js/index.js"></script>
+</body>
+
+</html>

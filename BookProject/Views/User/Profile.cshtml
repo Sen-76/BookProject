@@ -1,0 +1,80 @@
+﻿@using BookProject.Models
+@model User
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="web_title">User Profile | Sen</title>
+    <link rel="icon" href="~/image/Enmusubi-full-body.png" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/manga.css">
+    <link rel="stylesheet" href="~/css/mangadetail.css">
+
+</head>
+
+<body>
+    <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
+    @await Html.PartialAsync("Header")
+    @await Html.PartialAsync("SideBar")
+    <div class="main">
+        <div class="link" id="link">
+            <a href="/Home/Index"> Trang chủ</a>
+            /
+            <a href="/User/Profile"> User Profile </a>
+        </div>
+        <div class="new_update">
+            <form action="/User/UpdateProfile" method="POST">
+                <div class="formtop">
+                    <div style="width: 30%;" class="formleft">
+                        <span>Ảnh đại diện</span><br />
+                        <img style="align-items: center" src="/image/Enmusubi-full-body.png" alt="Bìa sách" width="200" height="200" />
+                        <input class="input" type="text" name="NewUser.Avatar" value="" />
+                    </div>
+                    <ul style="width: 69%;">
+                        <li>
+                            <span>Tên đầy đủ</span><br />
+                            <input class="input" type="text" name="NewUser.UserName" value="@ViewBag.User.UserName" />
+                            <input class="input" type="hidden" name="NewUser.UserId" value="@ViewBag.User.UserId" />
+                        </li>
+                        <li>
+                            <span>Email</span><br />
+                            <input class="input" type="text" name="NewUser.Email" value="@ViewBag.User.Email" />
+                        </li>
+                        <li>
+                            <span>FaceBook</span><br />
+                            <input class="input" type="text" name="NewUser.FaceBook" value="@ViewBag.User.FaceBook" />
+                        </li>
+                        <li>
+                            <span>Giới Tính</span><br />
+                            <select class="input" name="NewUser.Gender" style="width: 100%">
+                                <option @(ViewBag.User.Gender == 0 ? "selected" : "" ) value="0">Chưa cập nhật/ Không muốn nói</option>
+                                <option @(ViewBag.User.Gender == 1 ? "selected" : "" ) value="1">Nam</option>
+                                <option @(ViewBag.User.Gender == 2 ? "selected" : "" ) value="2">Nữ</option>
+                                <option @(ViewBag.User.Gender == 3 ? "selected" : "" ) value="3">Giới tính thứ 3</option>
+                            </select>
+                        </li>
+                        <li>
+                            <span>Địa chỉ</span><br />
+                            <input class="input" type="text" name="NewUser.Address" value="@ViewBag.User.Address" />
+                        </li>
+                        <li>
+                            <span>Ngày sinh:</span><br />
+                            <input style="width: 100%" class="input" type="date" name="NewUser.DoB" value="@ViewBag.User.DoB?.ToString("yyyy-MM-dd")" />
+                        </li>
+                    </ul>
+                </div>
+                <input class="readmanga" type="submit" name="Description" value="Update Information" />
+            </form>
+        </div>
+
+    </div>
+    @await Html.PartialAsync("OtherNav")
+
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="~/js/index.js"></script>
+</body>
+
+</html>

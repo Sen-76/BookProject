@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="web_title">Trang chủ | Sen</title>
+    <link rel="icon" href="~/image/Enmusubi-full-body.png" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/fnon.min.css">
+</head>
+
+<body>
+    <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
+    @await Html.PartialAsync("Header")
+    @await Html.PartialAsync("SideBar")
+    <div class="main">
+        <div class="link" id="link">
+            <a href="/Home/Index"> Trang chủ</a>
+        </div>
+
+
+
+    </div>
+    @await Html.PartialAsync("OtherNav")
+    <script src="~/js/fnon.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Fnon.Hint.Init({
+                zIndex: 9900,
+            });
+            // Hint
+            var message = "@(ViewBag.Message)";
+            var theme = "@(ViewBag.Theme)";
+            var title = "@(ViewBag.Title)";
+            var position = "right-top";
+            var animation = "slide-left";
+            Fnon.Hint[theme](message, {
+                title,
+                position,
+                animation,
+            })
+        });
+    </script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="~/js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+.form{
+    width: 100%;
+    position: relative;
+}
+.headimg {
+    width: 90%;
+    position: relative;
+    height: 40vh;
+    overflow: hidden;
+    margin: auto;
+    z-index: 10;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.form img{
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    object-fit: cover;
+}
+.infoform{
+    height: 200px;
+}
+.name {
+    color: white;
+    font-size: 25px;
+    margin: 10px 300px;
+}
+.avatar{
+    position: absolute;
+    overflow: hidden;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%; 
+    top: 250px;
+    left: 100px;
+    z-index: 100;
+}

@@ -1,0 +1,184 @@
+﻿@using BookProject.Models
+@model List<Book>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="web_title">Truyện tranh | Sen</title>
+    <link rel="icon" href="~/image/Enmusubi-full-body.png" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/manga.css">
+    <link rel="stylesheet" href="~/css/mangadetail.css">
+    <link rel="stylesheet" href="~/css/fnon.min.css">
+</head>
+
+<body>
+    <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
+    @await Html.PartialAsync("Header")
+    @await Html.PartialAsync("SideBar")
+    <div class="main ${leftActive}">
+
+        <div class="link">
+            <a href="/Home/Index"> Trang chủ </a>
+            <p> /</p>
+            <a href="/Books/Books"> Truyện tranh </a>
+        </div>
+        <div class="slider">
+            <h2>
+                <ion-icon name="thermometer"></ion-icon>
+                Truyện hot trong ngày
+            </h2>
+            <div class="slides">
+                <!-- radio buttons start -->
+                <input type="radio" name="radio-btn" id="radio1">
+                <input type="radio" name="radio-btn" id="radio2">
+                <input type="radio" name="radio-btn" id="radio3">
+                <input type="radio" name="radio-btn" id="radio4">
+                <input type="radio" name="radio-btn" id="radio5">
+                <!-- radio buttons end -->
+                <!-- slide image start -->
+                <div class="slidel first">
+                </div>
+                <div class="slidel">
+                    <a href=""><img src="/image/Enmusubi-full-body.png"></a>
+                    <a href="">
+                        <p>Name</p>
+                    </a>
+                    <a class="newestchap" href="#">Chapter</a>
+                    <ul class="ff">
+                        <li class="date">Time</li>
+                        <li class="hot">Hot</li>
+                    </ul>
+                </div>
+                <!-- slide image end -->
+                <!-- automatic navigation start -->
+                <div class="navigation-auto">
+                    <div class="auto-btn1"></div>
+                    <div class="auto-btn2"></div>
+                    <div class="auto-btn3"></div>
+                    <div class="auto-btn4"></div>
+                    <div class="btn5"></div>
+                </div>
+                <!-- automatic navigation end -->
+            </div>
+            <!-- manual navigation start -->
+            <div class="navigation-manual">
+                <label for="radio1" class="manual-btn"></label>
+                <label for="radio2" class="manual-btn"></label>
+                <label for="radio3" class="manual-btn"></label>
+                <label for="radio4" class="manual-btn"></label>
+                <label for="radio5" class="manual-btn btn5"></label>
+            </div>
+            <!-- manual navigation end -->
+        </div>
+
+        <div class="new_update">
+            <h2>
+                <ion-icon name="star-outline"></ion-icon>
+                Truyện mới cập nhật
+                <form action="/Books/Books" method="POST">
+                    <input style="width: 92%" class="input" oninput="searchManga()"
+                    placeholder="Nhập tên truyện vào đây" type="text" name="BookName" value="" />
+                    <input class="readmanga" type="submit" name="Description" value="Search" />
+                    @*<p>Sắp xếp theo: </p>
+                    <select class="input" name="order">
+                    <option @(ViewBag.Status == 1 ? "selected" : "" ) value="1">Thời gian cập nhật</option>
+                    <option @(ViewBag.Status == 2 ? "selected" : "" ) value="2">Tên truyện</option>
+                    <option @(ViewBag.Status == 3 ? "selected" : "" ) value="3">Số lượt xem</option>
+                    </select>*@
+                </form>
+            </h2>
+            <ul>
+                @foreach (Book o in Model)
+                {
+                                    <li class="slide">
+                                        <a href="/Books/DetailBook?BookId=@o.BookId"><img src="/image/Enmusubi-full-body.png"></a>
+                                        <a href="/Books/DetailBook?BookId=@o.BookId">
+                                            <p>@o.BookName</p>
+                                        </a>
+                                        <a class="newestchap" href="#">Chap</a>
+                                        <ul class="ff">
+                                            <li class="date">@o.TimeProvide?.ToString("dd MM yyyy")</li>
+                                            <li class="hot">Hot</li>
+                                        </ul>
+                                    </li>
+                }
+            </ul>
+            <div class="pagediv">
+                @if (ViewBag.Page > 1)
+                {
+                                    <a class="page" href="/Books/Books?Page=@(ViewBag.Page-1)"><ion-icon name="skip-backward"></ion-icon></a>
+                }
+                @*@for (int i = 1; i <= ViewBag.MaxPage; i++)
+                {
+                    <a class="page @(ViewBag.Page == i?" active":"")" href="/Books/Books?Page=@i">@i</a>
+                }*@
+                @if (ViewBag.Page > 2)
+                {
+                                    <a class="page " href="/Books/Books?Page=@(ViewBag.Page-2)">@(ViewBag.Page-2)</a>
+                }
+                @if (ViewBag.Page > 1)
+                {
+                                    <a class="page " href="/Books/Books?Page=@(ViewBag.Page-1)">@(ViewBag.Page-1)</a>
+                }
+                <a class="page active" href="/Books/Books?Page=@ViewBag.Page">@ViewBag.Page</a>
+                @if (ViewBag.Page < ViewBag.MaxPage)
+                {
+                                    <a class="page " href="/Books/Books?Page=@(ViewBag.Page+1)">@(ViewBag.Page+1)</a>
+                }
+                @if (ViewBag.Page < (ViewBag.MaxPage - 1))
+                {
+                                    <a class="page " href="/Books/Books?Page=@(ViewBag.Page+2)">@(ViewBag.Page+2)</a>
+                }
+                @if (ViewBag.Page < (ViewBag.MaxPage - 4))
+                {
+                                    <a class="page" href="#">...</a>
+                }
+                @if (ViewBag.Page < (ViewBag.MaxPage - 3))
+                {
+                                    <a class="page @(ViewBag.Page == (ViewBag.MaxPage - 1) ?" active":"")" href="/Books/Books?Page=@(ViewBag.MaxPage-1)">@(ViewBag.MaxPage-1)</a>
+                }
+                @if (ViewBag.Page < (ViewBag.MaxPage - 2))
+                {
+                                    <a class="page @(ViewBag.Page == ViewBag.MaxPage ?" active":"")" href="/Books/Books?Page=@ViewBag.MaxPage">@ViewBag.MaxPage</a>
+                }
+                @if (ViewBag.Page < ViewBag.MaxPage)
+                {
+                                    <a class="page" href="/Books/Books?Page=@(ViewBag.Page+1)"><ion-icon name="skip-forward"></a>
+                }
+            </div>
+        </div>
+
+
+    </div>
+    @await Html.PartialAsync("OtherNav")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function searchManga() {
+                                            var idConfirm = "UpdateTracking";
+                                            var id = document.querySelector(".id").value
+                                            $.ajax({
+                                                url: "/Book/TestAjax",
+                                                type: "get",
+                                                data: {
+                                                    idConfirm: idConfirm,
+                                                    id: id
+                                                },
+                                                success: function (data) {
+                                                    var confirm = document.querySelector(".go");
+                                                    confirm.innerHTML = data;
+                                                },
+                                                error: function (xhr) {
+                                                }
+                                            });
+                                        }
+    </script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="~/js/index.js"></script>
+    <script src="~/js/manga.js"></script>
+</body>
+
+</html>

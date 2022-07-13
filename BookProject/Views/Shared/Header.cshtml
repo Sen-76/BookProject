@@ -1,0 +1,54 @@
+﻿<div class="nav_head ${leftActive}">
+    <div class="left">
+        <a class="left_control aaa">
+            <ion-icon name="list"></ion-icon>
+        </a>
+        <div onclick="hmm()" class="list aaa">
+            <ion-icon name="list"></ion-icon>
+        </div>
+
+        <form action="Search" method="POST">
+            <div class="search aaa">
+                <ion-icon name="search"></ion-icon>
+            </div>
+            <input type="hidden" name="go" value="Search" />
+            <input name="txt" type="text" placeholder="Enter somethings..." class="mysearch">
+        </form>
+    </div>
+    <div class="right">
+        <div class="history aaa">
+            <a href="History">
+                <ion-icon name="alarm"></ion-icon>
+            </a>
+        </div>
+        <div class="notification aaa">
+            <ion-icon name="notifications"></ion-icon>
+        </div>
+        @if (ViewBag.UserId == 0 || ViewBag.UserId == null)
+        {
+            <div class="login aaa">
+                <a href="/Home/Login">
+                    <ion-icon name="person"></ion-icon>
+                </a>
+                <div style="display: none" class="loged aaa">
+                    <div class="imgBx">
+                    </div>
+                    <span class="username"></span>
+                </div>
+            </div>
+        }
+        @if (ViewBag.UserId != 0 && ViewBag.UserId != null)
+        {
+            <div class="loged aaa">
+                <div class="imgBx">
+                    <img src="~/image/shenhe__genshin_impact__by_cutesexyrobutts_dew4k8l.jpg">
+                </div>
+                <span class="username">@(ViewBag.UserName)</span>
+            </div>
+        }
+        <div class="setting aaa">
+            <ion-icon name="settings"></ion-icon>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,32 @@
+.ChapControl {
+    color: white;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.ChapControl ul {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-content: space-around;
+    font-size: 25px;
+}
+.ChapSelect{
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+    min-width: 200px;
+    margin: 20px;
+    text-align: center;
+}
+.MangaContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
