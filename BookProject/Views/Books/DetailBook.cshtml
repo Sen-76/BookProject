@@ -128,7 +128,15 @@
                     </li>
                 </ul>
             </div>
+            <div>
+                <h4>Provier / SubTeam</h4>
+                <li class="imgCmt">
+                    <img src="/image/shenhe__genshin_impact__by_cutesexyrobutts_dew4k8l.jpg">
+                </li>
+                @ViewBag.Usera.UserName
+            </div>
         </div>
+
         <div class="description">
             <h3><ion-icon name="information-circle-outline"></ion-icon> Tóm tắt</h3>
             <span style="padding: 0 30px">@ViewBag.Description</span>
@@ -154,24 +162,40 @@
             <ul>
                 @foreach (Chapter o in ViewBag.Chap)
                 {
-                    <a href="#">
+
                     <li>
-                        <ul class="subchaplist">    
+                        <ul class="subchaplist">
                             <li style="display: flex; flex-direction: row; align-items: center">
                                 @if (@ViewBag.Provider == @ViewBag.UserId)
                                 {
-                                <form action="/Books/DeleteChapter" method="POST">
-                                    <input type="hidden" name="ChapterId" value="@o.ChapterId" />
-                                    <input type="hidden" name="BookId" value="@ViewBag.BookId" />
-                                    <input type="submit" class="readmanga" value="Delete" />
-                                </form>
+                                    <form>
+                                        <a onclick="EditChap(@o.ChapterId)">
+                                            <ion-icon name="create"></ion-icon> Sửa
+                                        </a>
+                                    </form>
+                                    <form action="/Books/DeleteChapter" method="POST">
+                                        <input type="hidden" name="ChapterId" value="@o.ChapterId" />
+                                        <input type="hidden" name="BookId" value="@ViewBag.BookId" />
+                                        <input type="submit" class="readmanga" value="Delete" />
+
+                                    </form>
                                 }
-                        
+                                <a href="#" class="@("a" +o.ChapterId)">
                                     @o.ChapterName
+                                </a>
+                                @if (@ViewBag.Provider == @ViewBag.UserId)
+                                {
+                                    <form style="display: none" class="AddComment @o.ChapterId" action="/Books/EditChapter" method="POST">
+                                        <input class="TextComment" type="text" name="ChapterName" value="@o.ChapterName"></input>
+                                        <input type="hidden" name="ChapterId" value="@o.ChapterId"></input>
+                                        <input type="hidden" name="BookId" value="@ViewBag.BookId"></input>
+                                        <input class="PostComment" type="submit" value="Edit Chapter" name="PostComment" />
+                                    </form>
+                                }
                             </li>
                             <li class="time">@o.TimeUpdate</li>
                         </ul>
-                    </li></a>
+                    </li>
                 }
             </ul>
         </div>
@@ -206,12 +230,16 @@
                                             </div>
                                         </li>
                                         <li>
-                                            <form style="display: none;" class="AddComment" action="/Books/EditComment" method="POST">
-                                                <input class="TextComment" type="text" name="CommentContent" value="@o.CmtContent"></input>
-                                                <input type="hidden" name="BookId" value="@ViewBag.BookId"></input>
-                                                <input class="PostComment" type="submit" value="Edit Comment" name="PostComment" />
-                                            </form>
-                                            <div class="CommnentContent">
+                                            @if (ViewBag.UserId == o.UserId)
+                                            {
+                                                <form style="display: none" class="AddComment EidtComments @o.CommentId" action="/Books/EditComment" method="POST">
+                                                    <input class="TextComment" type="text" name="CommentContent" value="@o.CmtContent"></input>
+                                                    <input type="hidden" name="CmtId" value="@o.CommentId"></input>
+                                                    <input type="hidden" name="BookId" value="@ViewBag.BookId"></input>
+                                                    <input class="PostComment" type="submit" value="Edit Comment" name="PostComment" />
+                                                </form>
+                                            }
+                                            <div class="CommnentContent @("a" +o.CommentId)">
                                                 @o.CmtContent
                                             </div>
                                         </li>
@@ -226,13 +254,13 @@
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <ion-icon name="chatbubbles"></ion-icon> Trả lời
+                                                <ion-icon onclick="EditCmt(@o.CommentId)" name="chatbubbles"></ion-icon> Trả lời
                                             </a>
                                         </li>
                                         @if (ViewBag.UserId == o.UserId)
                                         {
                                             <li>
-                                                <a href="#">
+                                                <a onclick="EditCmt(@o.CommentId)">
                                                     <ion-icon name="create"></ion-icon> Sửa
                                                 </a>
                                             </li>
@@ -256,49 +284,60 @@
                     <a style="padding: 8px;" class="page @(ViewBag.Page == i?" active":"")" href="/Books/Books?Page=@i">@i</a>
                 }
             </div>
-            <!--                <div class="subCommentForm">
-                                <div class="imgCmt">
-                                    <img src="image/shenhe__genshin_impact__by_cutesexyrobutts_dew4k8l.jpg">
-                                </div>
-                                <ul class="cmtformto">
-                                    <li>
-                                        <ul class="cmtform">
-                                            <li>
-                                                <div class="CommentAcc">
-                                                    Tên Account
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="CommnentContent">
-                                                    Comment Content
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul class="CommentDate">
-                                            <li>
-                                                <a href="#">
-                                                    <ion-icon class="like" name="thumbs-up"></ion-icon> 0
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <ion-icon name="chatbubbles"></ion-icon> Trả lời
-                                                </a>
-                                            </li>
-                                            <li class="time">Thời gian</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>-->
+            @*<div class="subCommentForm">
+            <div class="imgCmt">
+            <img src="/image/shenhe__genshin_impact__by_cutesexyrobutts_dew4k8l.jpg">
+            </div>
+            <ul class="cmtformto">
+            <li>
+            <ul class="cmtform">
+            <li>
+            <div class="CommentAcc">
+            Tên Account
+            </div>
+            </li>
+            <li>
+            <div class="CommnentContent">
+            Comment Content
+            </div>
+            </li>
+            </ul>
+            </li>
+            <li>
+            <ul class="CommentDate">
+            <li>
+            <a href="#">
+            <ion-icon class="like" name="thumbs-up"></ion-icon> 0
+            </a>
+            </li>
+            <li>
+            <a href="#">
+            <ion-icon name="chatbubbles"></ion-icon> Trả lời
+            </a>
+            </li>
+            <li class="time">Thời gian</li>
+            </ul>
+            </li>
+            </ul>
+            </div>*@
         </div>
     </div>
     @await Html.PartialAsync("OtherNav")
     <script>
         function AddChap() {
             const Add = document.querySelector(".addchap");
+            document.querySelector(".EidtComments").style.display = 'none';
             Add.classList.toggle("active");
+        }
+    </script>
+    <script>
+        function EditCmt(CommentId) {
+            document.getElementsByClassName(CommentId)[0].style.display = 'block';
+            document.getElementsByClassName("a" + CommentId)[0].style.display = 'none';
+        }
+        function EditChap(ChapterId) {
+            document.getElementsByClassName(ChapterId)[0].style.display = 'flex ';
+            document.getElementsByClassName("a" + ChapterId)[0].style.display = 'none';
         }
     </script>
     <script src="~/js/fnon.min.js"></script>

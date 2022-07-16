@@ -36,5 +36,12 @@ namespace BookProject.Logics
             context.Chapters.Remove(a);
             context.SaveChanges();
         }
+        public void EditChapter(int ChapterId, string ChapterName)
+        {
+            Chapter a = context.Chapters.Where(x => x.ChapterId == ChapterId).FirstOrDefault();
+            a.ChapterName = ChapterName;
+            context.Chapters.Update(a);
+            context.SaveChanges();
+        }
     }
 }

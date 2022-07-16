@@ -172,6 +172,12 @@ namespace BookProject.Controllers
             cmt.AddComment(CommentContent, u.UserId, BookId);
             return RedirectToAction("DetailBook", new { BookId = BookId });
         }
+        public IActionResult EditComment(int BookId, int CmtId, string CommentContent)
+        {
+            CommentManager cmt = new CommentManager();
+            cmt.EditComment(CommentContent, CmtId);
+            return RedirectToAction("DetailBook", new { BookId = BookId });
+        }
         public IActionResult DeleteComment(int BookId, int CmtId)
         {
             CommentManager cmt = new CommentManager();
@@ -206,6 +212,12 @@ namespace BookProject.Controllers
         {
             ChapterManager chap = new ChapterManager();
             chap.DeleteChapter(ChapterId);
+            return RedirectToAction("DetailBook", new { BookId = BookId });
+        }
+        public IActionResult EditChapter(int BookId, int ChapterId, string ChapterName)
+        {
+            ChapterManager chap = new ChapterManager();
+            chap.EditChapter(ChapterId, ChapterName);
             return RedirectToAction("DetailBook", new { BookId = BookId });
         }
         public IActionResult DoUpdateBook(int BookId, string BookName, string OtherName,
@@ -275,6 +287,7 @@ namespace BookProject.Controllers
             ChapterManager chap = new ChapterManager();
             List<Chapter> lchap = chap.BookChapter(BookId);
             CommentManager cmt = new CommentManager();
+            UserManager user = new UserManager();
             int Index = 0;
             if (Page == null || Page == 0)
             {
@@ -299,6 +312,8 @@ namespace BookProject.Controllers
             ViewBag.Chap = lchap;
             ViewBag.Comment = lcmt;
             ViewBag.CountChap = lchap.Count;
+            User uu = user.Profile(Convert.ToInt32(lbook.Provider));
+            ViewBag.Usera = uu;
             ViewBag.BookId = lbook.BookId;
             ViewBag.BookName = lbook.BookName;
             ViewBag.Provider = lbook.Provider;

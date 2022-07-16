@@ -28,6 +28,13 @@ namespace BookProject.Logics
             a.Status = 0;
             context.SaveChanges();
         }
+        public void EditComment(string CmtContent, int CmtId)
+        {
+            Comment a = context.Comments.Where(x => x.CommentId == CmtId).FirstOrDefault();
+            a.CmtContent = CmtContent;
+            context.Comments.Update(a);
+            context.SaveChanges();
+        }
         public void AddComment(string CmtContent, int UserId, int BookId)
         {
             Comment a = new Comment();
