@@ -21,7 +21,10 @@ ul.report {
     flex-direction: row;
     flex-wrap: nowrap;
 }
-
+.prof {
+    display: flex;
+    align-items: center;
+}
 .description {
     color: white;
     margin: 5px 100px;

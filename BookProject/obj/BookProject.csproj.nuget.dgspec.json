@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Học tập\\PRN project\\BookProject\\BookProject\\BookProject.csproj": {}
+    "E:\\Git\\BookProject\\BookProject\\BookProject.csproj": {}
   },
   "projects": {
-    "E:\\Học tập\\PRN project\\BookProject\\BookProject\\BookProject.csproj": {
+    "E:\\Git\\BookProject\\BookProject\\BookProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Học tập\\PRN project\\BookProject\\BookProject\\BookProject.csproj",
+        "projectUniqueName": "E:\\Git\\BookProject\\BookProject\\BookProject.csproj",
         "projectName": "BookProject",
-        "projectPath": "E:\\Học tập\\PRN project\\BookProject\\BookProject\\BookProject.csproj",
+        "projectPath": "E:\\Git\\BookProject\\BookProject\\BookProject.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "E:\\Học tập\\PRN project\\BookProject\\BookProject\\obj\\",
+        "outputPath": "E:\\Git\\BookProject\\BookProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
