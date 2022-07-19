@@ -80,8 +80,10 @@
                 <ion-icon name="star-outline"></ion-icon>
                 Truyện mới cập nhật
                 <form action="/Books/Books" method="POST">
-                    <input style="width: 92%" class="input" oninput="searchManga()"
-                    placeholder="Nhập tên truyện vào đây" type="text" name="BookName" value="" />
+                    <input style="width: 92%" class="input BookName" oninput="searchManga()"
+                           placeholder="Nhập tên truyện vào đây" type="text" name="BookName" value="@ViewBag.Search" />
+                    <input style="width: 92%" class="input Author" oninput="searchManga()"
+                           placeholder="Tác giả" type="hidden" name="Author" value="@ViewBag.Author" />
                     <input class="readmanga" type="submit" name="Description" value="Search" />
                     @*<p>Sắp xếp theo: </p>
                     <select class="input" name="order">
@@ -91,64 +93,68 @@
                     </select>*@
                 </form>
             </h2>
-            <ul>
-                @foreach (Book o in Model)
-                {
-                                    <li class="slide">
-                                        <a href="/Books/DetailBook?BookId=@o.BookId"><img src="/image/Enmusubi-full-body.png"></a>
-                                        <a href="/Books/DetailBook?BookId=@o.BookId">
-                                            <p>@o.BookName</p>
-                                        </a>
-                                        <a class="newestchap" href="#">Chap</a>
-                                        <ul class="ff">
-                                            <li class="date">@o.TimeProvide?.ToString("dd MM yyyy")</li>
-                                            <li class="hot">Hot</li>
-                                        </ul>
-                                    </li>
-                }
-            </ul>
-            <div class="pagediv">
-                @if (ViewBag.Page > 1)
-                {
-                                    <a class="page" href="/Books/Books?Page=@(ViewBag.Page-1)"><ion-icon name="skip-backward"></ion-icon></a>
-                }
-                @*@for (int i = 1; i <= ViewBag.MaxPage; i++)
-                {
+            <div class="lbook" style="display: flex;
+    flex-direction: column;">
+                <ul>
+                    @foreach (Book o in Model)
+                    {
+                        <li class="slide">
+                            <a href="/Books/DetailBook?BookId=@o.BookId"><img src="/image/Enmusubi-full-body.png"></a>
+                            <a href="/Books/DetailBook?BookId=@o.BookId">
+                                <p>@o.BookName</p>
+                            </a>
+                            <a class="newestchap" href="#">Chap</a>
+                            <ul class="ff">
+                                <li class="date">@o.TimeProvide?.ToString("dd MM yyyy")</li>
+                                <li class="hot">Hot</li>
+                            </ul>
+                        </li>
+                    }
+
+                </ul>
+                <div class="pagediv">
+                    @if (ViewBag.Page > 1)
+                    {
+                        <a onclick="searchManga(@(ViewBag.Page-1))" class="page" href="/Books/Books?Page=@(ViewBag.Page-1)"><ion-icon name="skip-backward"></ion-icon></a>
+                    }
+                    @*@for (int i = 1; i <= ViewBag.MaxPage; i++)
+                    {
                     <a class="page @(ViewBag.Page == i?" active":"")" href="/Books/Books?Page=@i">@i</a>
-                }*@
-                @if (ViewBag.Page > 2)
-                {
-                                    <a class="page " href="/Books/Books?Page=@(ViewBag.Page-2)">@(ViewBag.Page-2)</a>
-                }
-                @if (ViewBag.Page > 1)
-                {
-                                    <a class="page " href="/Books/Books?Page=@(ViewBag.Page-1)">@(ViewBag.Page-1)</a>
-                }
-                <a class="page active" href="/Books/Books?Page=@ViewBag.Page">@ViewBag.Page</a>
-                @if (ViewBag.Page < ViewBag.MaxPage)
-                {
-                                    <a class="page " href="/Books/Books?Page=@(ViewBag.Page+1)">@(ViewBag.Page+1)</a>
-                }
-                @if (ViewBag.Page < (ViewBag.MaxPage - 1))
-                {
-                                    <a class="page " href="/Books/Books?Page=@(ViewBag.Page+2)">@(ViewBag.Page+2)</a>
-                }
-                @if (ViewBag.Page < (ViewBag.MaxPage - 4))
-                {
-                                    <a class="page" href="#">...</a>
-                }
-                @if (ViewBag.Page < (ViewBag.MaxPage - 3))
-                {
-                                    <a class="page @(ViewBag.Page == (ViewBag.MaxPage - 1) ?" active":"")" href="/Books/Books?Page=@(ViewBag.MaxPage-1)">@(ViewBag.MaxPage-1)</a>
-                }
-                @if (ViewBag.Page < (ViewBag.MaxPage - 2))
-                {
-                                    <a class="page @(ViewBag.Page == ViewBag.MaxPage ?" active":"")" href="/Books/Books?Page=@ViewBag.MaxPage">@ViewBag.MaxPage</a>
-                }
-                @if (ViewBag.Page < ViewBag.MaxPage)
-                {
-                                    <a class="page" href="/Books/Books?Page=@(ViewBag.Page+1)"><ion-icon name="skip-forward"></a>
-                }
+                    }*@
+                    @if (ViewBag.Page > 2)
+                    {
+                        <a class="page " onclick="searchManga(@(ViewBag.Page-2))">@(ViewBag.Page-2)</a>
+                    }
+                    @if (ViewBag.Page > 1)
+                    {
+                        <a class="page " onclick="searchManga(@(ViewBag.Page-1))">@(ViewBag.Page-1)</a>
+                    }
+                    <a class="page active" onclick="searchManga(@(ViewBag.Page))">@ViewBag.Page</a>
+                    @if (ViewBag.Page < ViewBag.MaxPage)
+                    {
+                        <a class="page " onclick="searchManga(@(ViewBag.Page+1))">@(ViewBag.Page+1)</a>
+                    }
+                    @if (ViewBag.Page < (ViewBag.MaxPage - 1))
+                    {
+                        <a class="page " onclick="searchManga(@(ViewBag.Page+2))">@(ViewBag.Page+2)</a>
+                    }
+                    @if (ViewBag.Page < (ViewBag.MaxPage - 4))
+                    {
+                        <a class="page" href="#">...</a>
+                    }
+                    @if (ViewBag.Page < (ViewBag.MaxPage - 3))
+                    {
+                        <a class="page @(ViewBag.Page == (ViewBag.MaxPage - 1) ?" active":"")" onclick="searchManga(@(ViewBag.MaxPage-1))">@(ViewBag.MaxPage-1)</a>
+                    }
+                    @if (ViewBag.Page < (ViewBag.MaxPage - 2))
+                    {
+                        <a class="page @(ViewBag.Page == ViewBag.MaxPage ?" active":"")" onclick="searchManga(@(ViewBag.MaxPage))">@ViewBag.MaxPage</a>
+                    }
+                    @if (ViewBag.Page < ViewBag.MaxPage)
+                    {
+                        <a class="page" onclick="searchManga(@(ViewBag.Page+1))" ><ion-icon name="skip-forward"></a>
+                    }
+                </div>
             </div>
         </div>
 
@@ -157,24 +163,26 @@
     @await Html.PartialAsync("OtherNav")
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        function searchManga() {
-                                            var idConfirm = "UpdateTracking";
-                                            var id = document.querySelector(".id").value
-                                            $.ajax({
-                                                url: "/Book/TestAjax",
-                                                type: "get",
-                                                data: {
-                                                    idConfirm: idConfirm,
-                                                    id: id
-                                                },
-                                                success: function (data) {
-                                                    var confirm = document.querySelector(".go");
-                                                    confirm.innerHTML = data;
-                                                },
-                                                error: function (xhr) {
-                                                }
-                                            });
-                                        }
+        function searchManga(page) {
+            var page = page;
+            var el = document.getElementsByClassName('BookName')[0].value;
+            var ell = document.getElementsByClassName('Author')[0].value;
+            $.ajax({
+                url: "/Books/TestAjax",
+                type: "get",
+                data: {
+                    BookName: el,
+                    Author: ell,
+                    Page: page
+                },
+                success: function(data) {
+                    var confirm = document.querySelector(".lbook");
+                    confirm.innerHTML = data;
+                },
+                error: function(xhr) {
+                }
+            });
+        }
     </script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script src="~/js/index.js"></script>

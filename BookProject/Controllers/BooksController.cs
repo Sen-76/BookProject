@@ -10,7 +10,7 @@ namespace BookProject.Controllers
 {
     public class BooksController : Controller
     {
-        public IActionResult Books(string BookName, int Page)
+        public IActionResult Books(string BookName, int Page, string Author, string Category)
         {
             int Index = 0;
             if (BookName == null)
@@ -27,17 +27,19 @@ namespace BookProject.Controllers
             }
             BookManager book = new BookManager();
             int MaxPage = 1;
-            if (book.CountBooks(BookName) / 20 == 0)
+            if (book.CountBooks(BookName, Author) / 20 == 0)
             {
-                MaxPage = book.CountBooks(BookName) / 20 + 1;
-            }if (book.CountBooks(BookName) / 20 != 0)
-            {
-                MaxPage = book.CountBooks(BookName) / 20 + 1;
+                MaxPage = book.CountBooks(BookName, Author) / 20 + 1;
             }
-            
+            if (book.CountBooks(BookName, Author) / 20 != 0)
+            {
+                MaxPage = book.CountBooks(BookName, Author) / 20 + 1;
+            }
+            ViewBag.Search = BookName;
             ViewBag.MaxPage = MaxPage;
+            ViewBag.Author = Author;
             ViewBag.Page = Page;
-            List<Book> lbook = book.GetBooks(BookName, Index);
+            List<Book> lbook = book.GetBooks(BookName, Index, Author, Category);
             string jsonStr = HttpContext.Session.GetString("user");
             User u;
             if (jsonStr is null) u = new User();
@@ -105,7 +107,7 @@ namespace BookProject.Controllers
             book.DeleteBooks(BookId);
             return RedirectToAction("ProviderBook");
         }
-        public IActionResult DoAddBook(string BookName, string OtherName, string Author, 
+        public IActionResult DoAddBook(string BookName, string OtherName, string Author,
             string Description, string BookCover)
         {
             BookManager book = new BookManager();
@@ -178,6 +180,65 @@ namespace BookProject.Controllers
             cmt.EditComment(CommentContent, CmtId);
             return RedirectToAction("DetailBook", new { BookId = BookId });
         }
+        public string TestAjax(string BookName, int Page, string Author, string Category)
+        {
+            int Index = 0;
+            if (BookName == null)
+            {
+                BookName = "";
+            }
+            if (Page == null || Page == 0)
+            {
+                Page = 1;
+            }
+            else
+            {
+                Index = (Page - 1) * 20;
+            }
+            BookManager book = new BookManager();
+            int MaxPage = 1;
+            if (book.CountBooks(BookName, Author) / 20 == 0)
+            {
+                MaxPage = book.CountBooks(BookName, Author) / 20 + 1;
+            }
+            if (book.CountBooks(BookName, Author) / 20 != 0)
+            {
+                MaxPage = book.CountBooks(BookName, Author) / 20 + 1;
+            }
+            List<Book> lbook = book.GetBooks(BookName, Index, Author, Category);
+            string a = "";
+            a += "<ul>";
+            foreach (Book o in lbook)
+            {
+                a += "<li class=\"slide\">\n"
+                       + " <a href =\"/Books/DetailBook?BookId=" + o.BookId + "\" ><img src =\"/image/Enmusubi-full-body.png\" ></a>\n"
+                       + " <a href =\"/ Books/DetailBook?BookId=" + o.BookId + "\" >\n"
+                       + "     <p> " + o.BookName + " </p>\n"
+                       + " </a>\n"
+                       + " <a class=\"newestchap\" href=\"#\">Chap</a>\n"
+                       + " <ul class=\"ff\">\n"
+                       + "     <li class=\"date\">" + o.TimeProvide?.ToString("dd MM yyyy") + " </li> \n"
+                       + "     <li class=\"hot\">Hot</li>\n"
+                       + " </ul>\n"
+                       + " </li>";
+            }
+            a += "</ul>";
+            a += "<div class=\"pagediv\">";
+            if (Page > 1)
+            {
+                a += "<a onclick=\"searchManga(" + (Page - 1) + ")\" class=\"page\" ><ion-icon name=\"skip-backward\" ></ion-icon></a>";
+            }
+            for (int i = 1; i <= MaxPage; i++)
+            {
+                a += "<a onclick=\"searchManga(" + i + ")\" class=\"page Page " + (Page == i ? "active" : "") + "\">" + i + "</a>";
+            }
+            if (Page < MaxPage)
+            {
+                a += "<a onclick=\"searchManga(" + (Page + 1) + ")\" class=\"page\"><ion-icon name=\"skip-forward\" ></a>";
+            }
+            a += "</div>";
+            return a;
+        }
         public IActionResult DeleteComment(int BookId, int CmtId)
         {
             CommentManager cmt = new CommentManager();
@@ -197,7 +258,7 @@ namespace BookProject.Controllers
             {
                 maxChaps = maxChap.ChapterNumber;
             }
-            if(ChapterName.Length > 100)
+            if (ChapterName.Length > 100)
             {
                 ViewBag.Message = "Tên chapter không được quá 100 ký tự.";
                 ViewBag.Theme = "Warning";

@@ -41,13 +41,13 @@
                     </li>
                     <li>
                         <h4>Tác giả:</h4>
-                        <a href="Search?go=SearchAuthor&AuthorName=${Manga.authorName}">@ViewBag.Author</a>
+                        <a href="/Books/Books?Author=@ViewBag.Provider">@ViewBag.Author</a>
                     </li>
                     <li>
                         <h4>Thể loại:</h4>
                         @foreach (BookCategory o in Model)
                         {
-                            <a href="#" style="margin-right: 5px">@o.Category.CategoryName</a>
+                            <a href="/Books/Books?Category=@o.CategoryId" style="margin-right: 5px">@o.Category.CategoryName</a>
                         }
                     </li>
                     <li>

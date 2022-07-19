@@ -47,7 +47,7 @@ namespace BookProject
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "/{Controller=Home}/{action=Index}"
+                    pattern: "/{Controller=Books}/{action=Books}"
                 );
             });
         }
