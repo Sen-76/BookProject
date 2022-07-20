@@ -19,6 +19,17 @@ namespace BookProject.Logics
         {
             return context.Users.Where(x => x.UserId == UserId).FirstOrDefault();
         }
+        public User Profile(string Mail)
+        {
+            return context.Users.Where(x => x.Email == Mail).FirstOrDefault();
+        }
+        public void ChangePass(string Mail, string Pass)
+        {
+            User a = context.Users.Where(x => x.Email == Mail).FirstOrDefault();
+            a.Password = Pass;
+            context.Users.Update(a);
+            context.SaveChanges();
+        }
         public List<User> ExistAccount()
         {
             return context.Users.ToList();

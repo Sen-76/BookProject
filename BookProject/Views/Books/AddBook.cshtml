@@ -19,7 +19,7 @@
     <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
     @await Html.PartialAsync("Header")
     @await Html.PartialAsync("SideBar")
-    <div class="main ${leftActive}">
+    <div class="main @ViewBag.LeftActive">
         <div class="link" id="link">
             <a href="/Home/Index"> Trang chủ</a>
             <p> /</p>

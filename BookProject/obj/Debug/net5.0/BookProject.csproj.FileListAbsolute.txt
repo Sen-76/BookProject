@@ -244,3 +244,4 @@ E:\Git\BookProject\BookProject\obj\Debug\net5.0\refint\BookProject.dll
 E:\Git\BookProject\BookProject\obj\Debug\net5.0\BookProject.pdb
 E:\Git\BookProject\BookProject\obj\Debug\net5.0\BookProject.genruntimeconfig.cache
 E:\Git\BookProject\BookProject\obj\Debug\net5.0\ref\BookProject.dll
+E:\Git\BookProject\BookProject\obj\Debug\net5.0\Razor\Views\Admin\WebManagerment.cshtml.g.cs

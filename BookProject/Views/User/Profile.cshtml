@@ -19,19 +19,19 @@
     <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
     @await Html.PartialAsync("Header")
     @await Html.PartialAsync("SideBar")
-    <div class="main">
+    <div class="main @ViewBag.LeftActive">
         <div class="link" id="link">
             <a href="/Home/Index"> Trang chủ</a>
             /
             <a href="/User/Profile"> User Profile </a>
         </div>
         <div class="new_update">
+            <b style="color: white">Update Information:</b><br />
             <form action="/User/UpdateProfile" method="POST">
                 <div class="formtop">
                     <div style="width: 30%;" class="formleft">
                         <span>Ảnh đại diện</span><br />
                         <img style="align-items: center" src="/image/Enmusubi-full-body.png" alt="Bìa sách" width="200" height="200" />
-                        <input class="input" type="text" name="NewUser.Avatar" value="" />
                     </div>
                     <ul style="width: 69%;">
                         <li>
@@ -67,6 +67,28 @@
                     </ul>
                 </div>
                 <input class="readmanga" type="submit" name="Description" value="Update Information" />
+            </form>
+            <br />
+            <b style="color: white">Change Password:</b><br />
+            <form class="changePass" action="/User/ChangePass" method="POST">
+                <ul">
+                    <li>
+                        <span>Nhập Mật Khẩu Cũ</span><br />
+                        <input class="input" type="password" name="OldPass" value="@ViewBag.OldPass" />
+                        <input class="input" type="hidden" name="UserId" value="@ViewBag.User.UserId" />
+                    </li>
+                    <li>
+                        <span>Nhập Mật Khẩu Mới</span><br />
+                        <input class="input" type="password" name="NewPass" value="@ViewBag.NewPass" />
+                    </li>
+                    <li>
+                        <span>Nhập Lại Mật Khẩu Mới</span><br />
+                        <input class="input" type="password" name="ReNewPass" value="@ViewBag.ReNewPass" />
+                    </li>
+                    <li>
+                        <button class="readmanga" type="submit">ChangePass</button>
+                    </li>
+                </ul>
             </form>
         </div>
 

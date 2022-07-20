@@ -12,7 +12,7 @@
     <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
     @await Html.PartialAsync("Header")
     @await Html.PartialAsync("SideBar")
-    <div class="main ${leftActive}">
+    <div class="main @ViewBag.LeftActive">
         <div class="link">
             <a href="/Home/Index"> Trang chủ</a>
             /
@@ -31,10 +31,13 @@
             </div>
             <span><input type="checkbox" name="remember" value="1" /> Nhớ Đăng Nhập?</span>
             <input type="submit" value="Đăng nhập" class="login_btn" name="login" />
-            Bạn chưa có tài khoản?
-            <div class="regis aa">Đăng kí</div>
-            Quên mật khẩu?
-            <div class="regis aa">Lấy lại mật khẩu</div>
+            <div style="display: flex">
+                Bạn chưa có tài khoản?
+                <div class="regis aa">Đăng kí</div>
+            </div><div style="display: flex">
+                Quên mật khẩu?
+                <div class="forget aa">Lấy lại mật khẩu</div>
+            </div>
         </form>
         <form action="/Home/Register" method="POST" class="formBox regis_form @ViewBag.Active">
             <h1>Đăng kí</h1>
@@ -55,8 +58,28 @@
                 <span>Email</span>
             </div>
             <input type="submit" value="Đăng kí" class="login_btn" name="regis" />
-            Bạn đã có tài khoản?
-            <div class="loginn aa">Trở về đăng nhập</div>
+            <div style="display: flex">
+                Bạn đã có tài khoản?
+                <div class="loginn aa">Trở về đăng nhập</div>
+            </div><div style="display: flex">
+                Quên mật khẩu?
+                <div class="forget aa">Lấy lại mật khẩu</div>
+            </div>
+        </form>
+        <form action="/Home/ForgotPass" method="POST" class="formBox forget_form">
+            <h1>Lấy lại mật khẩu</h1>
+            <div class="inputBox">
+                <input type="email" name="Mail" value="@ViewBag.Account" required>
+                <span>Nhập email của bạn</span>
+            </div>
+            <input type="submit" value="Lấy lại mật khẩu" class="login_btn" name="Forget" />
+            <div style="display: flex">
+                Bạn chưa có tài khoản?
+                <div class="regis aa">Đăng kí</div>
+            </div> <div style="display: flex">
+                Bạn đã có tài khoản?
+                <div class="loginn aa">Trở về đăng nhập</div>
+            </div>
         </form>
     </div>
     @await Html.PartialAsync("OtherNav")

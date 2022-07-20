@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title class="web_title">Trang chủ | Sen</title>
+    <title class="web_title">Quản lý Web | Sen</title>
     <link rel="icon" href="~/image/Enmusubi-full-body.png" type="image/gif" sizes="16x16">
     <link rel="stylesheet" href="~/css/index.css">
     <link rel="stylesheet" href="~/css/fnon.min.css">
@@ -18,7 +18,10 @@
     <div class="main @ViewBag.LeftActive">
         <div class="link" id="link">
             <a href="/Home/Index"> Trang chủ</a>
+            /
+            <a href="/Admin/WebManagerment">Book Managerment</a>
         </div>
+        <a href="#">Book Category</a>
     </div>
     @await Html.PartialAsync("OtherNav")
     <script src="~/js/fnon.min.js"></script>

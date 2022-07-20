@@ -35,6 +35,8 @@ namespace BookProject.Controllers
             {
                 MaxPage = book.CountBooks(BookName, Author) / 20 + 1;
             }
+            List<Book> topBook = book.GetTop10Books();
+            ViewBag.Top = topBook;
             ViewBag.Search = BookName;
             ViewBag.MaxPage = MaxPage;
             ViewBag.Author = Author;
@@ -46,7 +48,10 @@ namespace BookProject.Controllers
             else u = JsonConvert.DeserializeObject<User>(jsonStr);
             ViewBag.UserId = u.UserId;
             ViewBag.UserName = u.UserName;
+            ViewBag.Status = u.Status;
             ViewBag.UserAvatar = u.Avatar;
+            string active = HttpContext.Session.GetString("active");
+            ViewBag.LeftActive = active; 
             return View(lbook);
         }
         public IActionResult AddBook()
@@ -59,9 +64,12 @@ namespace BookProject.Controllers
             else u = JsonConvert.DeserializeObject<User>(jsonStr);
             ViewBag.UserId = u.UserId;
             ViewBag.UserName = u.UserName;
+            ViewBag.Status = u.Status;
             ViewBag.UserAvatar = u.Avatar;
             List<string> lista = new List<string>();
             ViewBag.Onecate = lista;
+            string active = HttpContext.Session.GetString("active");
+            ViewBag.LeftActive = active;
             return View(lcate);
         }
         public IActionResult UpdateBook(int BookId)
@@ -74,6 +82,7 @@ namespace BookProject.Controllers
             BookManager book = new BookManager();
             Book lbook = book.OneBook(BookId);
             ViewBag.UserId = u.UserId;
+            ViewBag.Status = u.Status;
             ViewBag.UserName = u.UserName;
             ViewBag.UserAvatar = u.Avatar;
             CategoryManager category = new CategoryManager();
@@ -91,6 +100,8 @@ namespace BookProject.Controllers
             ViewBag.Onecate = onecate;
             ViewBag.Lcate = lcate;
             ViewBag.Checked = "checked";
+            string active = HttpContext.Session.GetString("active");
+            ViewBag.LeftActive = active;
             return View(lcate);
         }
         public IActionResult DeleteBook(int BookId)
@@ -102,6 +113,7 @@ namespace BookProject.Controllers
             if (jsonStr is null) u = new User();
             else u = JsonConvert.DeserializeObject<User>(jsonStr);
             ViewBag.UserId = u.UserId;
+            ViewBag.Status = u.Status;
             ViewBag.UserName = u.UserName;
             ViewBag.UserAvatar = u.Avatar;
             book.DeleteBooks(BookId);
@@ -119,6 +131,7 @@ namespace BookProject.Controllers
             int Id = u.UserId;
             ViewBag.UserId = u.UserId;
             ViewBag.UserName = u.UserName;
+            ViewBag.Status = u.Status;
             ViewBag.UserAvatar = u.Avatar;
             foreach (Book b in lbook)
             {
@@ -162,6 +175,7 @@ namespace BookProject.Controllers
                 }
                 cate.AddCategories4NewBook(list);
             }
+
             return RedirectToAction("ProviderBook");
         }
         public IActionResult AddComment(int BookId, string CommentContent)
@@ -323,13 +337,22 @@ namespace BookProject.Controllers
             User u;
             if (jsonStr is null) u = new User();
             else u = JsonConvert.DeserializeObject<User>(jsonStr);
-            int Id = u.UserId;
-            ViewBag.UserId = u.UserId;
-            ViewBag.UserName = u.UserName;
-            ViewBag.UserAvatar = u.Avatar;
-            BookManager book = new BookManager();
-            List<Book> lbook = book.ProviderBooks(Id, BookName);
-            return View(lbook);
+            if(jsonStr != null)
+            {
+                int Id = u.UserId;
+                ViewBag.UserId = u.UserId;
+                ViewBag.UserName = u.UserName;
+                ViewBag.UserAvatar = u.Avatar;
+                BookManager book = new BookManager();
+                List<Book> lbook = book.ProviderBooks(Id, BookName);
+                string active = HttpContext.Session.GetString("active");
+                ViewBag.LeftActive = active;
+                return View(lbook);
+            }
+            else
+            {
+                return View("/views/home/index.cshtml");
+            }
         }
         public IActionResult DetailBook(int BookId, int Page)
         {
@@ -383,6 +406,8 @@ namespace BookProject.Controllers
             ViewBag.Description = lbook.Description;
             ViewBag.Status = lbook.Status;
             ViewBag.TimeProvide = lbook.TimeProvide;
+            string active = HttpContext.Session.GetString("active");
+            ViewBag.LeftActive = active;
             return View(lcate);
         }
     }

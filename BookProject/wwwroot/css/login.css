@@ -76,10 +76,16 @@
 .regis_form{
     display: none;
 }
+.forget_form{
+    display: none;
+}
 .login_form{
     display: flex;
 }
 .regis_form.active{
+    display: flex;
+}
+.forget_form.active {
     display: flex;
 }
 .login_form.active{

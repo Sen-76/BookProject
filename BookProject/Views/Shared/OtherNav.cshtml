@@ -3,6 +3,10 @@
         <li><a href="/User/Profile"><ion-icon name="contact"></ion-icon> Quản lý tài khoản</a></li>
         <li><a href="/Books/ProviderBook"><ion-icon name="alarm"></ion-icon> Quản lý sách</a></li>
         <li><a href="/Home/Logout"><ion-icon name="log-out"></ion-icon> Đăng xuất</a></li>
+        @if (ViewBag.Status == 5)
+        {
+            <li><a href="/Admin/WebManagerment"><ion-icon name="log-out"></ion-icon> Quản lý Web</a></li>
+        }
     </ul>
 </div>
 

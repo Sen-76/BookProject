@@ -67,11 +67,16 @@ namespace BookProject.Controllers
             ViewBag.UserId = u.UserId;
             ViewBag.UserName = u.UserName;
             ViewBag.UserAvatar = u.Avatar;
+            ViewBag.Status = u.Status;
+            string active = HttpContext.Session.GetString("active");
+            ViewBag.LeftActive = active;
 
             return View();
         }
         public IActionResult Login()
         {
+            string active = HttpContext.Session.GetString("active");
+            ViewBag.LeftActive = active;
             return View();
         }
         public IActionResult DoLogin(string Account, string Password)
@@ -91,7 +96,7 @@ namespace BookProject.Controllers
             {
                 string jsonStr = JsonConvert.SerializeObject(u);
                 HttpContext.Session.SetString("user", jsonStr);
-                ViewBag.Message = "Xin chào "+ u.UserName + ".";
+                ViewBag.Message = "Xin chào " + u.UserName + ".";
                 ViewBag.Theme = "Success";
                 ViewBag.Title = "Login thành công";
                 return RedirectToAction("Index");
@@ -103,7 +108,47 @@ namespace BookProject.Controllers
             HttpContext.Session.Remove("user");
             return View("/views/home/index.cshtml");
         }
+        public void SideBarActive()
+        {
+            string actives = HttpContext.Session.GetString("active");
+            if (actives != null)
+            {
+                HttpContext.Session.Remove("active");
+            }
+            else
+            {
+                HttpContext.Session.SetString("active", "active");
+            }
 
+        }
+        public IActionResult ForgotPass(string Mail)
+        {
+            UserManager user = new UserManager();
+            List<User> us = user.ExistAccount();
+            foreach (User u in us)
+            {
+                if (!Mail.Equals(u.Email))
+                {
+                    ViewBag.Message = "Email chưa được đăng kí trong hệ thống. " +
+                        "Vui lòng kiểm tra lại email hoặc đăng kí tài khoản mới.";
+                    ViewBag.Theme = "Warning";
+                    ViewBag.Title = "Đổi mật thất bại";
+                    return View("/Views/Home/Login.cshtml");
+                }
+            }
+            string newpass = RandomString(7);
+            User thisuser = user.Profile(Mail);
+            user.ChangePass(Mail, newpass);
+            thisuser.Password = newpass;
+            string Subject = "Bạn vừa thay đổi mật khẩu.";
+            string Body = "Tài khoản của bạn là: " + thisuser.UserName + "<br>Mật khẩu mới của bạn đã được đổi thành: " + newpass + "";
+            Send_Email(Mail, Subject, Body);
+            HttpContext.Session.Remove("user");
+            ViewBag.Message = "Đổi mật khẩu thành công, kiểm tra mail để biết mật khẩu mới.";
+            ViewBag.Theme = "Success";
+            ViewBag.Title = "Đổi mật khẩu thành công";
+            return View("/Views/Home/Login.cshtml");
+        }
         public IActionResult Register(string Account, string Password, string RePassword, string Email)
         {
             UserManager user = new UserManager();

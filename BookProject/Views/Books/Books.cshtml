@@ -19,8 +19,7 @@
     <video class="video" src="~/video/mylivewallpapers.com-Re-Zero-Rem-Tea-4K.mp4" loop autoplay muted></video>
     @await Html.PartialAsync("Header")
     @await Html.PartialAsync("SideBar")
-    <div class="main ${leftActive}">
-
+    <div class="main @ViewBag.LeftActive">
         <div class="link">
             <a href="/Home/Index"> Trang chủ </a>
             <p> /</p>
@@ -42,10 +41,12 @@
                 <!-- slide image start -->
                 <div class="slidel first">
                 </div>
-                <div class="slidel">
+                @foreach (var o in @ViewBag.Top)
+               {
+                   <div class="slidel">
                     <a href=""><img src="/image/Enmusubi-full-body.png"></a>
                     <a href="">
-                        <p>Name</p>
+                        <p>@o.BookName</p>
                     </a>
                     <a class="newestchap" href="#">Chapter</a>
                     <ul class="ff">
@@ -53,6 +54,7 @@
                         <li class="hot">Hot</li>
                     </ul>
                 </div>
+               }
                 <!-- slide image end -->
                 <!-- automatic navigation start -->
                 <div class="navigation-auto">

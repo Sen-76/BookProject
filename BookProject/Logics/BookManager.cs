@@ -16,6 +16,11 @@ namespace BookProject.Logics
         {
             return context.Books.Where(x => x.Status != 5).ToList();
         }
+        public List<Book> GetTop10Books()
+        {
+            return context.Books.OrderByDescending(x => x.TimeProvide)
+                .Where(x => x.Status != 5).Skip(0).Take(10).ToList();
+        }
         public List<Book> GetBooks(string BookName, int Index, string Author, string cate)
         {
             //List<int> bookId = context.BookCategories.

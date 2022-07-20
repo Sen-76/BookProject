@@ -38,20 +38,21 @@ search.onclick = function () {
   loged_nav.classList.remove("active");
 };
 list.onclick = function () {
-  nav_left.classList.toggle("active");
-  main.classList.toggle("active");
-  nav_head.classList.toggle("active");
-  mysearch.classList.remove("active");
-  loged_nav.classList.remove("active");
-  $.ajax({
-    url: "/Sen's Page/NavLeft",
-    type: "get",
-    success: function (data) {
-      var link = document.getElementById("link");
-      link.innerHTML += data;
-    },
-    error: function (xhr) {},
-  });
+    nav_left.classList.toggle("active");
+    main.classList.toggle("active");
+    nav_head.classList.toggle("active");
+    mysearch.classList.remove("active");
+    loged_nav.classList.remove("active");
+    $.ajax({
+        url: "/Home/SideBarActive",
+        type: "get",
+        data: {
+        },
+        success: function (data) {
+        },
+        error: function (xhr) {
+        }
+    });
 };
 bookmarks.onclick = function () {
   bookmarks_nav.classList.toggle("active");
